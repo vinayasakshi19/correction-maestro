@@ -1,0 +1,378 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "18c4ec54",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import nltk\n",
+    "from nltk.corpus import stopwords\n",
+    "from nltk import tokenize\n",
+    "from nltk.tokenize import word_tokenize\n",
+    "from operator import itemgetter\n",
+    "import math"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "cb3fb1b2",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "The word tsunami refers to the ocean or tidal waves waves. The tsunami is therefore considered to be a series of unusually long waves Powerful sites created by tsunamis and the earth. An earthquake that occurs in the depths of the water or in the Pacific Ocean. known as a tropical tsunami. especially in areas where two continents were hit by tsunamis that caused the water waves to sink.\n",
+      "A tsunami creates huge waves of water moving across the earth. The result is a large and long-lasting movement of water inland. As a result, these waves are extremely dangerous. A tsunami is caused by a sudden movement under the sea. Earthquakes that occur in the depths of the water and the sea. The Pacific Ocean is known as a hotbed of tsunamis. Tsunamis can occur for a variety of reasons other than earthquakes. One of the main causes is a volcanic eruption beneath the ocean floor. Tsunamis can also be caused by landslides, bombings, and other factors. Tsunamis are more common where two continents meet. A tsunami triggers a cascade of waves and waves. The Greeks were the first people on earth to claim a tsunami.\n",
+      "\n",
+      "\n",
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    "with open('Professor answer1.txt') as f:\n",
+    "    profanswer = f.read()\n",
+    "print(profanswer)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "4c4fcbb8",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "txt = ['s1.txt','s2.txt','s3.txt','s4.txt','s5.txt','s6.txt','s7.txt','s8.txt','s9.txt','s10.txt']\n",
+    "studentans = []\n",
+    "for i in txt:\n",
+    "    f= open(i,'r')\n",
+    "    contents = f.read()\n",
+    "    studentans.append(contents)\n",
+    "    f.close()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "46ff1f97",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "text = profanswer"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "0fa58b10",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "196\n"
+     ]
+    }
+   ],
+   "source": [
+    " \n",
+    "stop_words=set(stopwords.words('english'))\n",
+    "total_words=profanswer.split()\n",
+    "total_word_length=len(total_words)\n",
+    "print(total_word_length)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "06164865",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "17\n"
+     ]
+    }
+   ],
+   "source": [
+    "total_sentences = tokenize.sent_tokenize(profanswer)\n",
+    "total_sent_len = len(total_sentences)\n",
+    "print(total_sent_len)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "5759e0d6",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "{'The': 0.025510204081632654, 'word': 0.00510204081632653, 'tsunami': 0.03571428571428571, 'refers': 0.00510204081632653, 'ocean': 0.01020408163265306, 'tidal': 0.00510204081632653, 'waves': 0.04081632653061224, 'therefore': 0.00510204081632653, 'considered': 0.00510204081632653, 'series': 0.00510204081632653, 'unusually': 0.00510204081632653, 'long': 0.00510204081632653, 'Powerful': 0.00510204081632653, 'sites': 0.00510204081632653, 'created': 0.00510204081632653, 'tsunamis': 0.015306122448979591, 'earth': 0.015306122448979591, 'An': 0.00510204081632653, 'earthquake': 0.00510204081632653, 'occurs': 0.00510204081632653, 'depths': 0.01020408163265306, 'water': 0.025510204081632654, 'Pacific': 0.01020408163265306, 'Ocean': 0.01020408163265306, 'known': 0.01020408163265306, 'tropical': 0.00510204081632653, 'especially': 0.00510204081632653, 'areas': 0.00510204081632653, 'two': 0.01020408163265306, 'continents': 0.01020408163265306, 'hit': 0.00510204081632653, 'caused': 0.015306122448979591, 'sink': 0.00510204081632653, 'A': 0.015306122448979591, 'creates': 0.00510204081632653, 'huge': 0.00510204081632653, 'moving': 0.00510204081632653, 'across': 0.00510204081632653, 'result': 0.00510204081632653, 'large': 0.00510204081632653, 'long-lasting': 0.00510204081632653, 'movement': 0.01020408163265306, 'inland': 0.00510204081632653, 'As': 0.00510204081632653, 'result,': 0.00510204081632653, 'extremely': 0.00510204081632653, 'dangerous': 0.00510204081632653, 'sudden': 0.00510204081632653, 'sea': 0.01020408163265306, 'Earthquakes': 0.00510204081632653, 'occur': 0.01020408163265306, 'hotbed': 0.00510204081632653, 'Tsunamis': 0.015306122448979591, 'variety': 0.00510204081632653, 'reasons': 0.00510204081632653, 'earthquakes': 0.00510204081632653, 'One': 0.00510204081632653, 'main': 0.00510204081632653, 'causes': 0.00510204081632653, 'volcanic': 0.00510204081632653, 'eruption': 0.00510204081632653, 'beneath': 0.00510204081632653, 'floor': 0.00510204081632653, 'also': 0.00510204081632653, 'landslides,': 0.00510204081632653, 'bombings,': 0.00510204081632653, 'factors': 0.00510204081632653, 'common': 0.00510204081632653, 'meet': 0.00510204081632653, 'triggers': 0.00510204081632653, 'cascade': 0.00510204081632653, 'Greeks': 0.00510204081632653, 'first': 0.00510204081632653, 'people': 0.00510204081632653, 'claim': 0.00510204081632653}\n"
+     ]
+    }
+   ],
+   "source": [
+    "tf_score = {}\n",
+    "for each_word in total_words:\n",
+    "    each_word = each_word.replace('.','')\n",
+    "    if each_word not in stop_words:\n",
+    "        if each_word in tf_score:\n",
+    "            tf_score[each_word] += 1\n",
+    "        else:\n",
+    "            tf_score[each_word] = 1 \n",
+    "\n",
+    "# Dividing by total_word_length for each dictionary element\n",
+    "tf_score.update((x, y/int(total_word_length)) for x, y in tf_score.items())\n",
+    "print(tf_score)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "75a7a9b3",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def check_sent(word, sentences): \n",
+    "    final = [all([w in x for w in word]) for x in sentences] \n",
+    "    sent_len = [sentences[i] for i in range(0, len(final)) if final[i]]\n",
+    "    return int(len(sent_len))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "id": "7bf1f08a",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "{'The': 0.7537718023763802, 'word': 2.833213344056216, 'tsunami': 0.1941560144409574, 'refers': 2.833213344056216, 'ocean': 0.1941560144409574, 'tidal': 2.833213344056216, 'waves': 0.8873031950009027, 'therefore': 2.833213344056216, 'considered': 2.833213344056216, 'series': 2.833213344056216, 'unusually': 2.833213344056216, 'long': 2.833213344056216, 'Powerful': 2.833213344056216, 'sites': 2.833213344056216, 'created': 2.833213344056216, 'tsunamis': 0.1941560144409574, 'earth': 0.1941560144409574, 'An': 2.833213344056216, 'earthquake': 2.833213344056216, 'occurs': 2.833213344056216, 'depths': 1.7346010553881064, 'water': 0.4353180712578455, 'Pacific': 1.7346010553881064, 'Ocean': 1.7346010553881064, 'known': 1.0414538748281612, 'tropical': 2.833213344056216, 'especially': 2.833213344056216, 'areas': 2.833213344056216, 'two': 0.26826398659467937, 'continents': 0.1941560144409574, 'hit': 2.833213344056216, 'caused': 0.6359887667199967, 'sink': 2.833213344056216, 'A': 1.2237754316221157, 'creates': 2.833213344056216, 'huge': 2.833213344056216, 'moving': 2.833213344056216, 'across': 2.833213344056216, 'result': 2.833213344056216, 'large': 2.833213344056216, 'long-lasting': 2.833213344056216, 'movement': 0.5306282510621704, 'inland': 2.833213344056216, 'As': 2.833213344056216, 'result,': 2.833213344056216, 'extremely': 2.833213344056216, 'dangerous': 2.833213344056216, 'sudden': 2.833213344056216, 'sea': 0.06062462181643484, 'Earthquakes': 2.833213344056216, 'occur': 0.1941560144409574, 'hotbed': 2.833213344056216, 'Tsunamis': 0.7537718023763802, 'variety': 2.833213344056216, 'reasons': 2.833213344056216, 'earthquakes': 2.833213344056216, 'One': 2.833213344056216, 'main': 2.833213344056216, 'causes': 2.833213344056216, 'volcanic': 2.833213344056216, 'eruption': 2.833213344056216, 'beneath': 2.833213344056216, 'floor': 2.833213344056216, 'also': 2.833213344056216, 'landslides,': 2.833213344056216, 'bombings,': 2.833213344056216, 'factors': 2.833213344056216, 'common': 2.833213344056216, 'meet': 2.833213344056216, 'triggers': 2.833213344056216, 'cascade': 2.833213344056216, 'Greeks': 2.833213344056216, 'first': 2.833213344056216, 'people': 2.833213344056216, 'claim': 2.833213344056216}\n"
+     ]
+    }
+   ],
+   "source": [
+    "idf_score = {}\n",
+    "for each_word in total_words:\n",
+    "    each_word = each_word.replace('.','')\n",
+    "    if each_word not in stop_words:\n",
+    "        if each_word in idf_score:\n",
+    "            idf_score[each_word] = check_sent(each_word, total_sentences)\n",
+    "        else:\n",
+    "            idf_score[each_word] = 1\n",
+    "\n",
+    "# Performing a log and divide\n",
+    "idf_score.update((x, math.log(int(total_sent_len)/y)) for x, y in idf_score.items())\n",
+    "\n",
+    "print(idf_score)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "id": "4f787af1",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "{'The': 0.019228872509601536, 'word': 0.014455170122735795, 'tsunami': 0.006934143372891335, 'refers': 0.014455170122735795, 'ocean': 0.0019811838208260955, 'tidal': 0.014455170122735795, 'waves': 0.036216456938812355, 'therefore': 0.014455170122735795, 'considered': 0.014455170122735795, 'series': 0.014455170122735795, 'unusually': 0.014455170122735795, 'long': 0.014455170122735795, 'Powerful': 0.014455170122735795, 'sites': 0.014455170122735795, 'created': 0.014455170122735795, 'tsunamis': 0.0029717757312391437, 'earth': 0.0029717757312391437, 'An': 0.014455170122735795, 'earthquake': 0.014455170122735795, 'occurs': 0.014455170122735795, 'depths': 0.01770001076926639, 'water': 0.011105052838210344, 'Pacific': 0.01770001076926639, 'Ocean': 0.01770001076926639, 'known': 0.010627080355389399, 'tropical': 0.014455170122735795, 'especially': 0.014455170122735795, 'areas': 0.014455170122735795, 'two': 0.0027373876183130544, 'continents': 0.0019811838208260955, 'hit': 0.014455170122735795, 'caused': 0.009734521939591786, 'sink': 0.014455170122735795, 'A': 0.018731256606460953, 'creates': 0.014455170122735795, 'huge': 0.014455170122735795, 'moving': 0.014455170122735795, 'across': 0.014455170122735795, 'result': 0.014455170122735795, 'large': 0.014455170122735795, 'long-lasting': 0.014455170122735795, 'movement': 0.00541457399043031, 'inland': 0.014455170122735795, 'As': 0.014455170122735795, 'result,': 0.014455170122735795, 'extremely': 0.014455170122735795, 'dangerous': 0.014455170122735795, 'sudden': 0.014455170122735795, 'sea': 0.0006186185899636207, 'Earthquakes': 0.014455170122735795, 'occur': 0.0019811838208260955, 'hotbed': 0.014455170122735795, 'Tsunamis': 0.011537323505760921, 'variety': 0.014455170122735795, 'reasons': 0.014455170122735795, 'earthquakes': 0.014455170122735795, 'One': 0.014455170122735795, 'main': 0.014455170122735795, 'causes': 0.014455170122735795, 'volcanic': 0.014455170122735795, 'eruption': 0.014455170122735795, 'beneath': 0.014455170122735795, 'floor': 0.014455170122735795, 'also': 0.014455170122735795, 'landslides,': 0.014455170122735795, 'bombings,': 0.014455170122735795, 'factors': 0.014455170122735795, 'common': 0.014455170122735795, 'meet': 0.014455170122735795, 'triggers': 0.014455170122735795, 'cascade': 0.014455170122735795, 'Greeks': 0.014455170122735795, 'first': 0.014455170122735795, 'people': 0.014455170122735795, 'claim': 0.014455170122735795}\n"
+     ]
+    }
+   ],
+   "source": [
+    "tf_idf_score = {key: tf_score[key] * idf_score.get(key, 0) for key in tf_score.keys()}\n",
+    "print(tf_idf_score)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "id": "41f2cabb",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def get_top_n(dict_elem, n):\n",
+    "    result = dict(sorted(dict_elem.items(), key = itemgetter(1), reverse = True)[:n]) \n",
+    "    return result"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "id": "bd9794dd",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "['The', 'word', 'tsunami', 'refers', 'ocean', 'tidal', 'waves', 'therefore', 'considered', 'series', 'unusually', 'long', 'Powerful', 'sites', 'created', 'tsunamis', 'earth', 'An', 'earthquake', 'occurs', 'depths', 'water', 'Pacific', 'Ocean', 'known', 'tropical', 'especially', 'areas', 'two', 'continents', 'hit', 'caused', 'sink', 'A', 'creates', 'huge', 'moving', 'across', 'result', 'large', 'long-lasting', 'movement', 'inland', 'As', 'result,', 'extremely', 'dangerous', 'sudden', 'sea', 'Earthquakes', 'occur', 'hotbed', 'Tsunamis', 'variety', 'reasons', 'earthquakes', 'One', 'main', 'causes', 'volcanic', 'eruption', 'beneath', 'floor', 'also', 'landslides,', 'bombings,', 'factors', 'common', 'meet', 'triggers', 'cascade', 'Greeks', 'first', 'people', 'claim']\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "75"
+      ]
+     },
+     "execution_count": 12,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "text_list=list(dict(tf_idf_score).keys())\n",
+    "print(list(dict(tf_idf_score).keys()))\n",
+    "len(text_list)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "id": "7ccbea85",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def evaluate(doc,counter):\n",
+    "    total_words = doc.split()\n",
+    "    total_word_length = len(total_words)\n",
+    "    #print(total_word_length)\n",
+    "    total_sentences = tokenize.sent_tokenize(doc)\n",
+    "    total_sent_len = len(total_sentences)\n",
+    "   # print(total_sent_len)\n",
+    "    tf_score = {}\n",
+    "    for each_word in total_words:\n",
+    "        each_word = each_word.replace('.','')\n",
+    "        if each_word not in stop_words:\n",
+    "            if each_word in tf_score:\n",
+    "                tf_score[each_word] += 1\n",
+    "            else:\n",
+    "                tf_score[each_word] = 1\n",
+    "\n",
+    "    # Dividing by total_word_length for each dictionary element\n",
+    "    tf_score.update((x, y/int(total_word_length)) for x, y in tf_score.items())\n",
+    "    #print(tf_score)\n",
+    "    def check_sent(word, sentences): \n",
+    "        final = [all([w in x for w in word]) for x in sentences] \n",
+    "        sent_len = [sentences[i] for i in range(0, len(final)) if final[i]]\n",
+    "        return int(len(sent_len))\n",
+    "    idf_score = {}\n",
+    "    for each_word in total_words:\n",
+    "        each_word = each_word.replace('.','')\n",
+    "        if each_word not in stop_words:\n",
+    "            if each_word in idf_score:\n",
+    "                idf_score[each_word] = check_sent(each_word, total_sentences)\n",
+    "            else:\n",
+    "                idf_score[each_word] = 1\n",
+    "\n",
+    "    # Performing a log and divide\n",
+    "    idf_score.update((x, math.log(int(total_sent_len)/y)) for x, y in idf_score.items())\n",
+    "\n",
+    "    #print(idf_score)\n",
+    "    tf_idf_score = {key: tf_score[key] * idf_score.get(key, 0) for key in tf_score.keys()}\n",
+    "    #print(tf_idf_score)\n",
+    "    def get_top_n(dict_elem, n):\n",
+    "        result = dict(sorted(dict_elem.items(), key = itemgetter(1), reverse = True)[:n]) \n",
+    "        return result\n",
+    "    test_list=list(dict(tf_idf_score).keys())\n",
+    "    count=0\n",
+    "    for i in test_list:\n",
+    "      for j in text_list:\n",
+    "        if (i==j):\n",
+    "          count+=1\n",
+    "          #print(i)\n",
+    "    #print(count)\n",
+    "    if(count>=0 and count<=round(0.20*len(text_list))):\n",
+    "        print(\"Marks: 0.0--\"+' Student'+str(counter))\n",
+    "    elif (count>round(0.20*len(text_list)) and count<=round(0.4*len(text_list))):\n",
+    "        print('Marks: 0.5--'+' Student'+str(counter))\n",
+    "    elif count>round(0.4*len(text_list)) and count<=round(0.7*len(text_list)):\n",
+    "        print('Marks: 0.8--'+' Student'+str(counter))\n",
+    "    else:\n",
+    "        print('Marks:1.0--'+' Student'+str(counter))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "id": "976ee362",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Marks: 0.5-- Student1\n",
+      "Marks: 0.5-- Student2\n",
+      "Marks: 0.5-- Student3\n",
+      "Marks: 0.5-- Student4\n",
+      "Marks: 0.0-- Student5\n",
+      "Marks: 0.5-- Student6\n",
+      "Marks: 0.0-- Student7\n",
+      "Marks: 0.8-- Student8\n",
+      "Marks: 0.0-- Student9\n",
+      "Marks: 0.0-- Student10\n"
+     ]
+    }
+   ],
+   "source": [
+    "z = 0\n",
+    "for i in studentans:\n",
+    "    z = z+1\n",
+    "    evaluate(i,z)\n",
+    "    "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "810259dc",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "830f1248",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8.8"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
